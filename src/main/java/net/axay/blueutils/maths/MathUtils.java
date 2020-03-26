@@ -1,0 +1,9 @@
+package net.axay.blueutils.maths;
+
+public class MathUtils {
+
+    public static boolean isPointValue(double d) {
+        return d != (int) d;
+    }
+
+}

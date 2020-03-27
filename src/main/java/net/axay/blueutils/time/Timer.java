@@ -23,6 +23,10 @@ public class Timer {
         return (double) nanoTime / 1_000_000_000.0;
     }
 
+    public static String secondsStringFromSecondsTime(double secondsTime) {
+        return secondsStringFromSecondsTime(secondsTime, 20);
+    }
+
     public static String secondsStringFromSecondsTime(double secondsTime, int maxFractionDigits) {
         DecimalFormat secondsFormat = new DecimalFormat("#.#");
         secondsFormat.setMaximumFractionDigits(maxFractionDigits);

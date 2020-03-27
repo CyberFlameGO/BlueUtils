@@ -28,7 +28,7 @@ public class ElapsedTime {
     }
 
     public String toSecondsString() {
-        return toSecondsString(20);
+        return Timer.secondsStringFromSecondsTime(elapsedTimeSeconds);
     }
 
     public String toSecondsString(int maxFractionDigits) {

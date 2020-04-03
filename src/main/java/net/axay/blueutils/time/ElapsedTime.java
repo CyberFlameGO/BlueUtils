@@ -3,7 +3,7 @@ package net.axay.blueutils.time;
 public class ElapsedTime {
 
     private long elapsedTime;
-    private double elapsedTimeSeconds;
+    private Double elapsedTimeSeconds;
 
     public ElapsedTime(long startTime, long stopTime) {
         this(stopTime - startTime);
@@ -11,7 +11,6 @@ public class ElapsedTime {
 
     public ElapsedTime(long elapsedTime) {
         this.elapsedTime = elapsedTime;
-        this.elapsedTimeSeconds = Timer.secondsTimeFromNanoTime(elapsedTime);
     }
 
     public long getNanoTime() {
@@ -19,6 +18,9 @@ public class ElapsedTime {
     }
 
     public double getSecondsTime() {
+        if (elapsedTimeSeconds == null) {
+            elapsedTimeSeconds = Timer.secondsTimeFromNanoTime(elapsedTime);
+        }
         return elapsedTimeSeconds;
     }
 

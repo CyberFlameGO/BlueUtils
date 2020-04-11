@@ -30,11 +30,11 @@ public class ElapsedTime {
     }
 
     public String toSecondsString() {
-        return Timer.secondsStringFromSecondsTime(elapsedTimeSeconds);
+        return Timer.secondsStringFromSecondsTime(getSecondsTime());
     }
 
     public String toSecondsString(int maxFractionDigits) {
-        return Timer.secondsStringFromSecondsTime(elapsedTimeSeconds, maxFractionDigits);
+        return Timer.secondsStringFromSecondsTime(getSecondsTime(), maxFractionDigits);
     }
 
 }

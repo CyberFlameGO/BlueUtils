@@ -4,8 +4,8 @@ import java.text.DecimalFormat;
 
 public class Timer {
 
-    long startTime;
-    long stopTime;
+    private long startTime;
+    private long stopTime;
 
     public void start() {
         startTime = System.nanoTime();

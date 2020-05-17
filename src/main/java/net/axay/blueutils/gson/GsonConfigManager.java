@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 
-public class ConfigManager {
+public class GsonConfigManager {
 
     private static final Gson gson = new Gson();
     private static final Gson gsonPretty = new GsonBuilder()

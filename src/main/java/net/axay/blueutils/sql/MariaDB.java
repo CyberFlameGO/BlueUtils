@@ -1,6 +1,7 @@
 package net.axay.blueutils.sql;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.mariadb.jdbc.MariaDbPoolDataSource;
 
 import java.io.Closeable;
@@ -13,16 +14,10 @@ public class MariaDB implements Closeable, AutoCloseable {
 
     private MariaDbPoolDataSource pool;
 
-    private SQLLoginInformation sqlLoginInformation;
+    private final SQLLoginInformation sqlLoginInformation;
 
-    public MariaDB(SQLLoginInformation sqlLoginInformation) {
-        if (sqlLoginInformation != null) {
-            this.sqlLoginInformation = sqlLoginInformation;
-        } else {
-            this.sqlLoginInformation = new SQLLoginInformation();
-            NullPointerException nullPointerException = new NullPointerException("The SQL-Login Information is null!");
-            nullPointerException.printStackTrace();
-        }
+    public MariaDB(@NotNull SQLLoginInformation sqlLoginInformation) {
+        this.sqlLoginInformation = sqlLoginInformation;
     }
 
     /**
@@ -43,18 +38,15 @@ public class MariaDB implements Closeable, AutoCloseable {
             pool.setMaxPoolSize(32);
             pool.setMinPoolSize(8);
 
-            System.out.println("Successfully setup connection-pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
+            System.out.println("Successfully set up connection-pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
 
         } catch (SQLException e) {
+            System.out.println("Failed to set up connection-pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
             e.printStackTrace();
-            System.out.println("Failed to setup connection-pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
         }
 
     }
 
-    /**
-     * @return Returns the SQL pool.
-     */
     public MariaDbPoolDataSource getPool() {
         return pool;
     }
@@ -65,19 +57,21 @@ public class MariaDB implements Closeable, AutoCloseable {
      */
     @Override
     public void close() {
-        pool.close();
+        if (pool != null) pool.close();
     }
 
     /**
-     * @param sql the sql statement which should be executed; <br>
-     *            should be a prepared statement
-     * @param parameters the parameters for the prepared statement; <br>
-     *                   at the moment this does only support string, int
+     * @param sql the sql statement which should be executed
+     * @param parameters the parameters for the prepared statement
+     *                   (in the correct order)
      * @return the result of the sql statement
+     * or null if the pool is null
      * @throws SQLException if the statement could not be executed
      */
-    @NotNull
+    @Nullable
     public ResultSet executePreparedStatement(String sql, Object... parameters) throws SQLException {
+
+        if (pool == null) return null;
 
         try (
                 Connection connection = getPool().getConnection();
@@ -86,19 +80,12 @@ public class MariaDB implements Closeable, AutoCloseable {
 
             int i = 1;
             for (Object parameter : parameters) {
-
-                if (parameter instanceof String) {
-                    preparedStatement.setString(i, (String) parameter);
+                try {
+                    preparedStatement.setObject(i, parameter);
+                } catch (Exception exc) {
+                    throw new IllegalArgumentException("An object of the type " + parameter.getClass().getName() + " cannot be set as a parameter of the prepared statement!");
                 }
-                else if (parameter instanceof Integer) {
-                    preparedStatement.setInt(i, (int) parameter);
-                }
-                else {
-                    throw new IllegalArgumentException("The executePreparedStatement() method only allows string and int parameters!");
-                }
-
                 i++;
-
             }
 
             return preparedStatement.executeQuery();

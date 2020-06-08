@@ -21,6 +21,8 @@
         <downloadSources>true</downloadSources>
         <downloadJavadocs>true</downloadJavadocs>
 
+        <kotlin.version>1.3.72</kotlin.version>
+
     </properties>
 
     <dependencies>
@@ -41,6 +43,19 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>19.0.0</version>
+        </dependency>
+
+        <!-- KOTLIN -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

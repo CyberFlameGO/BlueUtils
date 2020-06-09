@@ -81,7 +81,7 @@ public class MariaDB implements Closeable, AutoCloseable {
             int i = 1;
             for (Object parameter : parameters) {
                 try {
-                    preparedStatement.setObject(i, parameter);
+                    preparedStatement.setObject(i + 1, parameter);
                 } catch (Exception exc) {
                     throw new IllegalArgumentException("An object of the type " + parameter.getClass().getName() + " cannot be set as a parameter of the prepared statement!");
                 }

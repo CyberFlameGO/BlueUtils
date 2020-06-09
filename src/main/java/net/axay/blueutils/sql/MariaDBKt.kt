@@ -58,7 +58,7 @@ class MariaDBKt(private val sqlLoginInformation: SQLLoginInformation) : AutoClos
 
                 for ((index: Int, parameter: Any) in parameters.withIndex()) {
                     try {
-                        preparedStatement.setObject(index, parameter)
+                        preparedStatement.setObject(index + 1, parameter)
                     } catch (exc: Exception) {
                         throw IllegalArgumentException("An object of the type ${parameter::class.simpleName} cannot be set as a parameter of the prepared statement!")
                     }

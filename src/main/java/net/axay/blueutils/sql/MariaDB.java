@@ -38,10 +38,10 @@ public class MariaDB implements Closeable, AutoCloseable {
             pool.setMaxPoolSize(32);
             pool.setMinPoolSize(8);
 
-            System.out.println("Successfully set up connection-pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
+            System.out.println("Successfully set up connection pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
 
         } catch (SQLException e) {
-            System.out.println("Failed to set up connection-pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
+            System.out.println("Failed to set up connection pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
             e.printStackTrace();
         }
 

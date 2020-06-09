@@ -25,10 +25,10 @@ class MariaDBKt(private val sqlLoginInformation: SQLLoginInformation) : AutoClos
 
             }
 
-            println("Successfully set up connection-pool to " + sqlLoginInformation.host + ":" + sqlLoginInformation.port)
+            println("Successfully set up connection pool to " + sqlLoginInformation.host + ":" + sqlLoginInformation.port)
 
         } catch (e: SQLException) {
-            println("Failed to set up connection-pool to " + sqlLoginInformation.host + ":" + sqlLoginInformation.port)
+            println("Failed to set up connection pool to " + sqlLoginInformation.host + ":" + sqlLoginInformation.port)
             e.printStackTrace()
         }
     }

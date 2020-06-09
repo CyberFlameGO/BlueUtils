@@ -1,7 +1,6 @@
 package net.axay.blueutils.sql;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.mariadb.jdbc.MariaDbPoolDataSource;
 
 import java.io.Closeable;
@@ -63,15 +62,18 @@ public class MariaDB implements Closeable, AutoCloseable {
     /**
      * @param sql the sql statement which should be executed
      * @param parameters the parameters for the prepared statement
-     *                   (in the correct order)
+     * (in the correct order)
      * @return the result of the sql statement
-     * or null if the pool is null
      * @throws SQLException if the statement could not be executed
+     * @throws IllegalArgumentException if the type of a parameter
+     * cannot be used in a sql statement
+     * @throws IllegalStateException if the pool is null
      */
-    @Nullable
-    public ResultSet executePreparedStatement(String sql, Object... parameters) throws SQLException {
+    @NotNull
+    public ResultSet executePreparedStatement(String sql, Object... parameters)
+            throws SQLException, IllegalStateException, IllegalArgumentException {
 
-        if (pool == null) return null;
+        if (pool == null) throw new IllegalStateException("Cannot execute prepared statement. Call connect() first!");
 
         try (
                 Connection connection = getPool().getConnection();

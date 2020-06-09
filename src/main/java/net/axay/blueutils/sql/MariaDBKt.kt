@@ -46,10 +46,12 @@ class MariaDBKt(private val sqlLoginInformation: SQLLoginInformation) : AutoClos
      * @param parameters the parameters for the prepared statement
      * (in the correct order)
      * @return the result of the sql statement
-     * or null if the pool is null
      * @throws SQLException if the statement could not be executed
+     * @throws IllegalArgumentException if the type of a parameter
+     * cannot be used in a sql statement
+     * @throws IllegalStateException if the pool is null
      */
-    fun executePreparedStatement(sql: String, vararg parameters: Any): ResultSet? {
+    fun executePreparedStatement(sql: String, vararg parameters: Any): ResultSet {
 
         pool?.let { pool ->
 
@@ -70,7 +72,7 @@ class MariaDBKt(private val sqlLoginInformation: SQLLoginInformation) : AutoClos
 
         }
 
-        return null
+        throw IllegalStateException("Cannot execute prepared statement. Call connect() first!")
 
     }
 

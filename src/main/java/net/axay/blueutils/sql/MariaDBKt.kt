@@ -14,7 +14,7 @@ class MariaDBKt(private val sqlLoginInformation: SQLLoginInformation) : AutoClos
             MariaDbPoolDataSource().let {
 
                 it.user = sqlLoginInformation.user
-                it.serverName = sqlLoginInformation.database
+                it.serverName = sqlLoginInformation.host
                 it.port = sqlLoginInformation.port
                 it.setPassword(sqlLoginInformation.password)
                 it.databaseName = sqlLoginInformation.database

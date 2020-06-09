@@ -30,7 +30,7 @@ public class MariaDB implements Closeable, AutoCloseable {
             pool = new MariaDbPoolDataSource();
 
             pool.setUser(sqlLoginInformation.getUser());
-            pool.setServerName(sqlLoginInformation.getDatabase());
+            pool.setServerName(sqlLoginInformation.getHost());
             pool.setPort(sqlLoginInformation.getPort());
             pool.setPassword(sqlLoginInformation.getPassword());
             pool.setDatabaseName(sqlLoginInformation.getDatabase());

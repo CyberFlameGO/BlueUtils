@@ -3,7 +3,8 @@ package net.axay.blueutils.geometry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Circle {
+@Deprecated
+public class CircleJava {
 
     public static List<Location2D> getCircle(int radius) {
         return getCircle(0, 0, radius);

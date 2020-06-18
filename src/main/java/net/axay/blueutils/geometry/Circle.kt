@@ -6,9 +6,6 @@ data class Circle(val radius: Int, val center: Location2D) {
 
         val locationList: MutableSet<Location2D> = HashSet()
 
-        val xLoc: Int = center.x
-        val yLoc: Int = center.y
-
         var currentRadius: Int = radius
         while (currentRadius >= 0) {
 

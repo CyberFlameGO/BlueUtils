@@ -4,7 +4,7 @@ import org.mariadb.jdbc.MariaDbPoolDataSource
 import java.sql.ResultSet
 import java.sql.SQLException
 
-class MariaDB(private val sqlLoginInformation: SQLLoginInformation) : AutoCloseable {
+class MariaDB(private val databaseLoginInformation: DatabaseLoginInformation) : AutoCloseable {
 
     private var pool: MariaDbPoolDataSource? = null
 
@@ -13,11 +13,11 @@ class MariaDB(private val sqlLoginInformation: SQLLoginInformation) : AutoClosea
 
             MariaDbPoolDataSource().let {
 
-                it.user = sqlLoginInformation.user
-                it.serverName = sqlLoginInformation.host
-                it.port = sqlLoginInformation.port
-                it.setPassword(sqlLoginInformation.password)
-                it.databaseName = sqlLoginInformation.database
+                it.user = databaseLoginInformation.user
+                it.serverName = databaseLoginInformation.host
+                it.port = databaseLoginInformation.port
+                it.setPassword(databaseLoginInformation.password)
+                it.databaseName = databaseLoginInformation.database
                 it.maxPoolSize = 32
                 it.minPoolSize = 8
 
@@ -25,10 +25,10 @@ class MariaDB(private val sqlLoginInformation: SQLLoginInformation) : AutoClosea
 
             }
 
-            println("Successfully set up connection pool to " + sqlLoginInformation.host + ":" + sqlLoginInformation.port)
+            println("Successfully set up connection pool to " + databaseLoginInformation.host + ":" + databaseLoginInformation.port)
 
         } catch (e: SQLException) {
-            println("Failed to set up connection pool to " + sqlLoginInformation.host + ":" + sqlLoginInformation.port)
+            println("Failed to set up connection pool to " + databaseLoginInformation.host + ":" + databaseLoginInformation.port)
             e.printStackTrace()
         }
     }

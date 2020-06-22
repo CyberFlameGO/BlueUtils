@@ -14,10 +14,10 @@ public class MariaDBJava implements Closeable, AutoCloseable {
 
     private MariaDbPoolDataSource pool;
 
-    private final SQLLoginInformation sqlLoginInformation;
+    private final DatabaseLoginInformation databaseLoginInformation;
 
-    public MariaDBJava(@NotNull SQLLoginInformation sqlLoginInformation) {
-        this.sqlLoginInformation = sqlLoginInformation;
+    public MariaDBJava(@NotNull DatabaseLoginInformation databaseLoginInformation) {
+        this.databaseLoginInformation = databaseLoginInformation;
     }
 
     /**
@@ -29,19 +29,19 @@ public class MariaDBJava implements Closeable, AutoCloseable {
 
             pool = new MariaDbPoolDataSource();
 
-            pool.setUser(sqlLoginInformation.getUser());
-            pool.setServerName(sqlLoginInformation.getHost());
-            pool.setPort(sqlLoginInformation.getPort());
-            pool.setPassword(sqlLoginInformation.getPassword());
-            pool.setDatabaseName(sqlLoginInformation.getDatabase());
+            pool.setUser(databaseLoginInformation.getUser());
+            pool.setServerName(databaseLoginInformation.getHost());
+            pool.setPort(databaseLoginInformation.getPort());
+            pool.setPassword(databaseLoginInformation.getPassword());
+            pool.setDatabaseName(databaseLoginInformation.getDatabase());
 
             pool.setMaxPoolSize(32);
             pool.setMinPoolSize(8);
 
-            System.out.println("Successfully set up connection pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
+            System.out.println("Successfully set up connection pool to " + databaseLoginInformation.getHost() + ":" + databaseLoginInformation.getPort());
 
         } catch (SQLException e) {
-            System.out.println("Failed to set up connection pool to " + sqlLoginInformation.getHost() + ":" + sqlLoginInformation.getPort());
+            System.out.println("Failed to set up connection pool to " + databaseLoginInformation.getHost() + ":" + databaseLoginInformation.getPort());
             e.printStackTrace();
         }
 

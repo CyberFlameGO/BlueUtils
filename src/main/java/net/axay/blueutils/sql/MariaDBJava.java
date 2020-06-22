@@ -9,13 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MariaDB implements Closeable, AutoCloseable {
+@Deprecated
+public class MariaDBJava implements Closeable, AutoCloseable {
 
     private MariaDbPoolDataSource pool;
 
     private final SQLLoginInformation sqlLoginInformation;
 
-    public MariaDB(@NotNull SQLLoginInformation sqlLoginInformation) {
+    public MariaDBJava(@NotNull SQLLoginInformation sqlLoginInformation) {
         this.sqlLoginInformation = sqlLoginInformation;
     }
 

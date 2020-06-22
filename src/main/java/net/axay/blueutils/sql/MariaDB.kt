@@ -4,7 +4,7 @@ import org.mariadb.jdbc.MariaDbPoolDataSource
 import java.sql.ResultSet
 import java.sql.SQLException
 
-class MariaDBKt(private val sqlLoginInformation: SQLLoginInformation) : AutoCloseable {
+class MariaDB(private val sqlLoginInformation: SQLLoginInformation) : AutoCloseable {
 
     private var pool: MariaDbPoolDataSource? = null
 

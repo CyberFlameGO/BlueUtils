@@ -7,7 +7,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 
-public class GsonConfigManager {
+@Deprecated
+public class GsonConfigManagerJava {
 
     private static final Gson gson = new Gson();
     private static final Gson gsonPretty = new GsonBuilder()

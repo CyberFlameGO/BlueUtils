@@ -25,7 +25,6 @@ object GsonConfigManager {
         }
     }
 
-
     fun <T> loadOrCreateDefault(
             file: File,
             configClass: Class<T>,

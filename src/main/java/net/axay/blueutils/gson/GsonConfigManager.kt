@@ -25,4 +25,15 @@ object GsonConfigManager {
         }
     }
 
+    fun <T> loadOrCreateDefault(file: File, configClass: Class<T>, pretty: Boolean = true): T {
+        try {
+            return loadConfig(file, configClass)
+        } catch (exc: Exception) {
+            configClass.newInstance().let {
+                saveConfig(file, it, pretty)
+                return it
+            }
+        }
+    }
+
 }

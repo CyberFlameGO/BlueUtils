@@ -1,6 +1,7 @@
 package net.axay.blueutils.sql;
 
-public class SQLLoginInformation {
+@Deprecated
+public class SQLLoginInformationJava {
 
     private String host;
     private int port;
@@ -8,7 +9,7 @@ public class SQLLoginInformation {
     private String user;
     private String password;
 
-    public SQLLoginInformation(String host, int port, String database, String user, String password) {
+    public SQLLoginInformationJava(String host, int port, String database, String user, String password) {
         this.host = host;
         this.port = port;
         this.database = database;
@@ -16,7 +17,7 @@ public class SQLLoginInformation {
         this.password = password;
     }
 
-    public SQLLoginInformation() {
+    public SQLLoginInformationJava() {
         this.host = "host";
         this.port = 3306;
         this.database = "database";

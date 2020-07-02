@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package net.axay.blueutils.gson
 
 import com.google.gson.Gson

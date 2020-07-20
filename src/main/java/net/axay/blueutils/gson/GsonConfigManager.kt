@@ -31,7 +31,7 @@ object GsonConfigManager {
             file: File,
             configClass: Class<T>,
             pretty: Boolean = true,
-            default: () -> T = { configClass.newInstance() }
+            default: () -> T = { configClass.getDeclaredConstructor().newInstance() }
     ): T {
         try {
             return loadConfig(file, configClass)

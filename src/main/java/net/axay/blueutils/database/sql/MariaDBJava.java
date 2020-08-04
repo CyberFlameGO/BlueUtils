@@ -1,5 +1,6 @@
-package net.axay.blueutils.sql;
+package net.axay.blueutils.database.sql;
 
+import net.axay.blueutils.database.DatabaseLoginInformation;
 import org.jetbrains.annotations.NotNull;
 import org.mariadb.jdbc.MariaDbPoolDataSource;
 

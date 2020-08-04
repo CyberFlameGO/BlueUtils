@@ -1,5 +1,6 @@
-package net.axay.blueutils.sql
+package net.axay.blueutils.database.sql
 
+import net.axay.blueutils.database.DatabaseLoginInformation
 import org.mariadb.jdbc.MariaDbPoolDataSource
 import java.sql.ResultSet
 import java.sql.SQLException

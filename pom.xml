@@ -45,6 +45,12 @@
             <version>19.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.litote.kmongo</groupId>
+            <artifactId>kmongo</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+
         <!-- KOTLIN -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

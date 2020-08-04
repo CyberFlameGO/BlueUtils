@@ -1,4 +1,4 @@
-package net.axay.blueutils.sql
+package net.axay.blueutils.database
 
 data class DatabaseLoginInformation(
         val host: String,

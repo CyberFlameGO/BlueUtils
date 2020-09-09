@@ -63,7 +63,7 @@ class MariaDB(private val databaseLoginInformation: DatabaseLoginInformation) : 
                     try {
                         preparedStatement.setObject(index + 1, parameter)
                     } catch (exc: Exception) {
-                        throw IllegalArgumentException("An object of the type ${parameter::class.simpleName} cannot be set as a parameter of the prepared statement!")
+                        exc.printStackTrace()
                     }
                 }
 

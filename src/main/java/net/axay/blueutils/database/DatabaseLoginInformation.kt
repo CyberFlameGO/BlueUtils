@@ -6,4 +6,8 @@ data class DatabaseLoginInformation(
         val database: String,
         val user: String,
         val password: String
-)
+) {
+    companion object {
+        val NOTSET_DEFAULT get() = DatabaseLoginInformation("notset", 12345, "notset", "notset", "notset")
+    }
+}

@@ -40,16 +40,16 @@ repositories {
 dependencies {
 
     // MARIADB
-    implementation("org.mariadb.jdbc", "mariadb-java-client", "2.6.2")
+    implementation("org.mariadb.jdbc", "mariadb-java-client", "2.7.0")
 
     // GSON
     implementation("com.google.code.gson", "gson", "2.8.6")
 
     // JETBRAINS ANNOTATIONS
-    implementation("org.jetbrains", "annotations", "19.0.0")
+    implementation("org.jetbrains", "annotations", "20.1.0")
 
     // KMONGO
-    implementation("org.litote.kmongo", "kmongo", "4.0.3")
+    implementation("org.litote.kmongo", "kmongo", "4.1.3")
 
 }
 

@@ -1,2 +1,7 @@
-/target
-BlueUtils.iml
+src/test/
+build/
+gradle/
+.idea/
+.gradle/
+logs/
+gradle.properties

@@ -5,6 +5,7 @@ package net.axay.blueutils.database.mongodb
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.*
 import net.axay.blueutils.database.DatabaseLoginInformation
+import org.bson.Document
 import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollection
 import java.io.Closeable
@@ -32,10 +33,10 @@ class MongoDB(
 
     }
 
-    inline fun <reified T : Any> getCollection(
+    inline fun <reified T : Any> getCollectionOrCreate(
             name: String,
             noinline onCreate: ((MongoCollection<T>) -> Unit)? = null
-    ): MongoCollection<T>? {
+    ): MongoCollection<T> {
 
         var ifNew = false
         if (!database.listCollectionNames().contains(name)) {
@@ -50,6 +51,11 @@ class MongoDB(
         return collection
 
     }
+
+    fun getDocumentCollectionOrCreate(
+            name: String,
+            onCreate: ((MongoCollection<Document>) -> Unit)? = null
+    ) = getCollectionOrCreate(name, onCreate)
 
     fun <T> executeTransaction(transaction: (ClientSession) -> T): T
         = mongoClient.startSession().use { session ->

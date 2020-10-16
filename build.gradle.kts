@@ -2,10 +2,10 @@
 
 /*
  * BUILD CONSTANTS
-*/
+ */
 
 val JVM_VERSION = JavaVersion.VERSION_1_8
-val JVM_VERSION_STRING = "1.8"
+val JVM_VERSION_STRING = JVM_VERSION.versionString
 
 /*
  * PROJECT
@@ -48,8 +48,9 @@ dependencies {
     // JETBRAINS ANNOTATIONS
     implementation("org.jetbrains", "annotations", "20.1.0")
 
-    // KMONGO
+    // KMONGO and MONGODB
     implementation("org.litote.kmongo", "kmongo", "4.1.3")
+    implementation("org.mongodb", "mongodb-driver-sync", "4.1.1")
 
 }
 
@@ -60,10 +61,10 @@ dependencies {
 // JAVA VERSION
 
 java.sourceCompatibility = JVM_VERSION
+
 tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = JVM_VERSION_STRING
-    }
+    compileKotlin { configureJvmVersion() }
+    compileTestKotlin { configureJvmVersion() }
 }
 
 // SOURCE CODE
@@ -73,6 +74,18 @@ val sourcesJar by tasks.creating(Jar::class) {
     archiveClassifier.set("sources")
     from(sourceSets["main"].allSource)
 }
+
 artifacts {
     add("archives", sourcesJar)
 }
+
+/*
+ * EXTENSIONS
+ */
+
+val JavaVersion.versionString get() = majorVersion.let {
+    val version = it.toInt()
+    if (version <= 10) "1.$it" else it
+}
+
+fun org.jetbrains.kotlin.gradle.tasks.KotlinCompile.configureJvmVersion() { kotlinOptions.jvmTarget = JVM_VERSION_STRING }

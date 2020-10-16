@@ -1,46 +1,34 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
+@file:Suppress("MemberVisibilityCanBePrivate", "unused")
 
 package net.axay.blueutils.database.mongodb
 
-import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
-import com.mongodb.MongoCredential
-import com.mongodb.ServerAddress
 import com.mongodb.client.*
-import com.mongodb.connection.ServerSettings
-import com.mongodb.event.ServerListener
 import net.axay.blueutils.database.DatabaseLoginInformation
 import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollection
+import java.io.Closeable
 
-class MongoDB(databaseLoginInformation: DatabaseLoginInformation, kMongo: Boolean = true): AutoCloseable {
+class MongoDB(
+        private val loginInformation: DatabaseLoginInformation,
+        kMongo: Boolean = true
+): Closeable {
 
-    val database: MongoDatabase?
-
-    private var _mongoClient: MongoClient? = null
-    val mongoClient: MongoClient get() = _mongoClient ?: throw IllegalStateException("Trying to access MongoClient while it is null")
+    val mongoClient: MongoClient
+    val database: MongoDatabase
 
     init {
 
-        databaseLoginInformation.let {
-
-            val clientSettings = MongoClientSettings.builder()
-                .applyToClusterSettings { builder ->
-                    builder.hosts(listOf(it.mongoServerAddress))
-                }
-                .credential(it.mongoCredential)
-            .build()
-
-            _mongoClient = if (kMongo) KMongo.createClient(clientSettings) else MongoClients.create(clientSettings)
-
-            database = try {
-                mongoClient.getDatabase(it.database)
-            } catch (exc: Exception) {
-                exc.printStackTrace()
-                null
+        val clientSettings = MongoClientSettings.builder()
+            .applyToClusterSettings { builder ->
+                builder.hosts(listOf(loginInformation.mongoServerAddress))
             }
+            .credential(loginInformation.mongoCredential)
+        .build()
 
-        }
+        mongoClient = if (kMongo) KMongo.createClient(clientSettings) else MongoClients.create(clientSettings)
+
+        database = mongoClient.getDatabase(loginInformation.database)
 
     }
 
@@ -48,29 +36,25 @@ class MongoDB(databaseLoginInformation: DatabaseLoginInformation, kMongo: Boolea
             name: String,
             noinline onCreate: ((MongoCollection<T>) -> Unit)? = null
     ): MongoCollection<T>? {
-        database?.let {
 
-            var ifNew = false
-            if (!it.listCollectionNames().contains(name)) {
-                it.createCollection(name)
-                ifNew = true
-            }
-
-            val collection = it.getCollection<T>(name)
-            if (ifNew)
-                onCreate?.invoke(collection)
-
-            return collection
+        var ifNew = false
+        if (!database.listCollectionNames().contains(name)) {
+            database.createCollection(name)
+            ifNew = true
         }
-        return null
+
+        val collection = database.getCollection<T>(name)
+        if (ifNew)
+            onCreate?.invoke(collection)
+
+        return collection
+
     }
 
-    fun <T> executeTransaction(transaction: (ClientSession) -> T): T {
-        val clientSession = mongoClient.startSession()
-        val result = clientSession.withTransaction { transaction.invoke(clientSession) }
-        clientSession.close()
-        return result
-    }
+    fun <T> executeTransaction(transaction: (ClientSession) -> T): T
+        = mongoClient.startSession().use { session ->
+            session.withTransaction { transaction.invoke(session) }
+        }
 
     override fun close() {
         this.mongoClient.close()

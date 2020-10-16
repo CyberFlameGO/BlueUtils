@@ -2,19 +2,18 @@
 
 package net.axay.blueutils.database.mongodb
 
+import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoCredential
 import com.mongodb.ServerAddress
-import com.mongodb.client.ClientSession
-import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoDatabase
+import com.mongodb.client.*
+import com.mongodb.connection.ServerSettings
+import com.mongodb.event.ServerListener
 import net.axay.blueutils.database.DatabaseLoginInformation
 import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollection
-import java.lang.IllegalStateException
 
-class MongoDB(databaseLoginInformation: DatabaseLoginInformation): AutoCloseable {
+class MongoDB(databaseLoginInformation: DatabaseLoginInformation, kMongo: Boolean = true): AutoCloseable {
 
     val database: MongoDatabase?
 
@@ -25,21 +24,16 @@ class MongoDB(databaseLoginInformation: DatabaseLoginInformation): AutoCloseable
 
         databaseLoginInformation.let {
 
-            val mongoClient = KMongo.createClient(
+            val clientSettings = MongoClientSettings.builder()
+                .applyToClusterSettings { builder ->
+                    builder.hosts(listOf(it.mongoServerAddress))
+                }
+                .credential(it.mongoCredential)
+            .build()
 
-                MongoClientSettings.builder()
-
-                    .applyToClusterSettings { builder ->
-                        builder.hosts(listOf(ServerAddress(it.host, it.port)))
-                    }
-                    .credential(MongoCredential.createCredential(it.user, it.database, it.password.toCharArray()))
-
-                    .build()
-
-            )
+            _mongoClient = if (kMongo) KMongo.createClient(clientSettings) else MongoClients.create(clientSettings)
 
             database = try {
-                this._mongoClient = mongoClient
                 mongoClient.getDatabase(it.database)
             } catch (exc: Exception) {
                 exc.printStackTrace()

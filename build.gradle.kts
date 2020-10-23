@@ -49,8 +49,8 @@ dependencies {
     implementation("org.jetbrains", "annotations", "20.1.0")
 
     // KMONGO and MONGODB
-    implementation("org.litote.kmongo", "kmongo", "4.1.3")
-    implementation("org.mongodb", "mongodb-driver-sync", "4.1.1")
+    api("org.litote.kmongo", "kmongo", "4.1.3")
+    api("org.mongodb", "mongodb-driver-sync", "4.1.1")
 
 }
 

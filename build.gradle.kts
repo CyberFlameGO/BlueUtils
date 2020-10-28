@@ -22,10 +22,11 @@ description = "A collection of utils I need for myself."
 
 plugins {
 
-    java
+    `java-library`
+
     kotlin("jvm") version "1.4.10"
 
-    maven
+    `maven-publish`
 
 }
 

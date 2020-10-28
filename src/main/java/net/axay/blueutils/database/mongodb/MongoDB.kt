@@ -22,15 +22,17 @@ class MongoDB(
 
     init {
 
-        if (spigot)
+        if (spigot && kMongo)  {
             System.setProperty("org.litote.mongo.test.mapping.service", "org.litote.kmongo.jackson.JacksonClassMappingTypeService")
+            System.setProperty("org.litote.mongo.test.mapping.service", "org.litote.kmongo.serialization.SerializationClassMappingTypeService")
+        }
 
         val clientSettings = MongoClientSettings.builder()
             .applyToClusterSettings { builder ->
                 builder.hosts(listOf(loginInformation.mongoServerAddress))
             }
             .credential(loginInformation.mongoCredential)
-            .uuidRepresentation(UuidRepresentation.STANDARD)
+            .uuidRepresentation(UuidRepresentation.JAVA_LEGACY)
         .build()
 
         mongoClient = if (kMongo) KMongo.createClient(clientSettings) else MongoClients.create(clientSettings)

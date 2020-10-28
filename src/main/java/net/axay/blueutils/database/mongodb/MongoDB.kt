@@ -32,7 +32,7 @@ class MongoDB(
                 builder.hosts(listOf(loginInformation.mongoServerAddress))
             }
             .credential(loginInformation.mongoCredential)
-            .uuidRepresentation(UuidRepresentation.JAVA_LEGACY)
+            .uuidRepresentation(UuidRepresentation.STANDARD)
         .build()
 
         mongoClient = if (kMongo) KMongo.createClient(clientSettings) else MongoClients.create(clientSettings)

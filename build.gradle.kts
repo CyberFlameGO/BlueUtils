@@ -14,7 +14,7 @@ val JVM_VERSION_STRING = JVM_VERSION.versionString
  */
 
 group = "net.axay"
-version = "1.0.0"
+version = "1.0.1"
 
 description = "A collection of utils I need for myself."
 
@@ -28,7 +28,7 @@ plugins {
 
     kotlin("jvm") version "1.4.10"
 
-    maven
+    `maven-publish`
 
 }
 
@@ -73,13 +73,33 @@ tasks {
 // SOURCE CODE
 
 val sourcesJar by tasks.creating(Jar::class) {
-    dependsOn(JavaPlugin.CLASSES_TASK_NAME)
     archiveClassifier.set("sources")
     from(sourceSets["main"].allSource)
 }
 
 artifacts {
-    add("archives", sourcesJar)
+    archives(sourcesJar)
+}
+
+/*
+ * PUBLISHING
+ */
+
+publishing {
+    publications {
+        create<MavenPublication>(project.name) {
+
+
+            from(components["java"])
+
+            artifact(sourcesJar)
+
+            this.groupId = project.group.toString()
+            this.artifactId = project.name
+            this.version = project.version.toString()
+
+        }
+    }
 }
 
 /*

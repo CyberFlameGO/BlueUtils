@@ -27,7 +27,7 @@ object GsonConfigManager {
     fun <T> saveConfig(file: File, defaultConfig: T, pretty: Boolean = true) {
         file.createIfNotExists()
         FileWriter(file).use { writer ->
-            gson(true).toJson(defaultConfig, writer)
+            gson(pretty).toJson(defaultConfig, writer)
         }
     }
 

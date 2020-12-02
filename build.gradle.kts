@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * BUILD CONSTANTS
  */
 
-val JVM_VERSION = JavaVersion.VERSION_1_8
+val JVM_VERSION = JavaVersion.VERSION_11
 val JVM_VERSION_STRING = JVM_VERSION.versionString
 
 /*

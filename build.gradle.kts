@@ -1,5 +1,7 @@
 @file:Suppress("PropertyName")
 
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 /*
  * BUILD CONSTANTS
  */
@@ -26,7 +28,7 @@ plugins {
 
     kotlin("jvm") version "1.4.10"
 
-    `maven-publish`
+    maven
 
 }
 
@@ -61,10 +63,11 @@ dependencies {
 // JAVA VERSION
 
 java.sourceCompatibility = JVM_VERSION
+java.targetCompatibility = JVM_VERSION
 
 tasks {
-    compileKotlin { configureJvmVersion() }
-    compileTestKotlin { configureJvmVersion() }
+    compileKotlin.configureJvmVersion()
+    compileTestKotlin.configureJvmVersion()
 }
 
 // SOURCE CODE
@@ -88,4 +91,4 @@ val JavaVersion.versionString get() = majorVersion.let {
     if (version <= 10) "1.$it" else it
 }
 
-fun org.jetbrains.kotlin.gradle.tasks.KotlinCompile.configureJvmVersion() { kotlinOptions.jvmTarget = JVM_VERSION_STRING }
+fun TaskProvider<KotlinCompile>.configureJvmVersion() { get().kotlinOptions.jvmTarget = JVM_VERSION_STRING }

@@ -4,8 +4,12 @@ import java.io.File
 
 fun File.createIfNotExists(): Boolean {
     return if (!exists()) {
-        if (!parentFile.exists())
-            parentFile.mkdirs()
-        createNewFile()
+        if (isDirectory)
+            mkdirs()
+        else {
+            if (!parentFile.exists())
+                parentFile.mkdirs()
+            createNewFile()
+        }
     } else true
 }

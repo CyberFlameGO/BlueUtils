@@ -17,7 +17,7 @@ val JVM_VERSION_STRING = JVM_VERSION.versionString
  */
 
 group = "net.axay"
-version = "1.0.1"
+version = "1.0.2"
 
 description = "A collection of utils I need for myself."
 
@@ -127,6 +127,22 @@ publishing {
             this.groupId = project.group.toString()
             this.artifactId = project.name
             this.version = project.version.toString()
+
+            pom {
+
+                name.set(project.name)
+                description.set(project.description)
+
+                developers {
+                    developer {
+                        name.set("bluefireoly")
+                    }
+                }
+
+                url.set(GITHUB_URL)
+                scm { url.set(GITHUB_URL) }
+
+            }
 
         }
     }

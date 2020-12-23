@@ -1,10 +1,13 @@
 @file:Suppress("PropertyName")
 
+import java.util.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /*
  * BUILD CONSTANTS
  */
+
+val GITHUB_URL = "https://github.com/bluefireoly/BlueUtils"
 
 val JVM_VERSION = JavaVersion.VERSION_11
 val JVM_VERSION_STRING = JVM_VERSION.versionString
@@ -29,6 +32,8 @@ plugins {
     kotlin("jvm") version "1.4.10"
 
     `maven-publish`
+
+    id("com.jfrog.bintray") version "1.8.5"
 
 }
 
@@ -84,6 +89,31 @@ artifacts {
 /*
  * PUBLISHING
  */
+
+bintray {
+
+    user = project.findProperty("bintray.username") as? String ?: ""
+    key = project.findProperty("bintray.api_key") as? String ?: ""
+
+    setPublications(project.name)
+
+    pkg.apply {
+
+        version.apply {
+            name = project.version.toString()
+            released = Date().toString()
+        }
+
+        repo = project.name
+        name = project.name
+
+        setLicenses("Apache-2.0")
+
+        vcsUrl = GITHUB_URL
+
+    }
+
+}
 
 publishing {
     publications {

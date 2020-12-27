@@ -1,5 +1,5 @@
 package net.axay.blueutils.geometry
 
-data class Location2D(val x: Number, val y: Number)
+data class Location2D(val x: Int, val y: Int)
 
-data class Location3D(val x: Number, val y: Number, val z: Number)
+data class Location3D(val x: Int, val y: Int, val z: Int)

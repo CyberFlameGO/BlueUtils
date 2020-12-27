@@ -57,7 +57,8 @@ dependencies {
     implementation("org.jetbrains", "annotations", "20.1.0")
 
     // KMONGO and MONGODB
-    implementation("org.litote.kmongo", "kmongo-core", "4.1.3")
+    implementation("org.litote.kmongo", "kmongo-core", "4.2.3")
+    implementation("org.litote.kmongo", "kmongo-coroutine-core", "4.2.3")
 
 }
 

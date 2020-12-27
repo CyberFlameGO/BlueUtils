@@ -1,26 +1,27 @@
 package net.axay.blueutils.database.mongodb
 
-import com.mongodb.client.MongoCollection
+import kotlinx.coroutines.runBlocking
 import net.axay.blueutils.database.DatabaseLoginInformation
-import org.litote.kmongo.getCollection
+import org.litote.kmongo.coroutine.CoroutineCollection
+import org.litote.kmongo.coroutine.coroutine
 
 /**
- * An instance of this class represents a connection to a singke
- * MongoDB database.
+ * An instance of this class represents a coroutine based
+ * connection to a single MongoDB database.
  *
  * @param kMongo set this to true if you are working with KMongo (for kotlin)
  * @param spigot set this to true if you are working with spigot (a minecraft server api)
  */
-class SyncMongoDB(
+class CoroutineMongoDB(
     loginInformation: DatabaseLoginInformation,
     kMongo: Boolean = true,
     spigot: Boolean = false,
-) : MongoDB<com.mongodb.client.MongoClient, com.mongodb.client.MongoDatabase>(
+) : MongoDB<org.litote.kmongo.coroutine.CoroutineClient, org.litote.kmongo.coroutine.CoroutineDatabase>(
     loginInformation, kMongo, spigot,
 
     clientCreator = { clientSettings, ifKMongo ->
-        if (ifKMongo) org.litote.kmongo.KMongo.createClient(clientSettings)
-        else com.mongodb.client.MongoClients.create(clientSettings)
+        if (ifKMongo) org.litote.kmongo.reactivestreams.KMongo.createClient(clientSettings).coroutine
+        else com.mongodb.reactivestreams.client.MongoClients.create(clientSettings).coroutine
     },
 
     databaseCreator = { client, databaseName ->
@@ -38,8 +39,8 @@ class SyncMongoDB(
      */
     inline fun <reified T : Any> getCollectionOrCreate(
         name: String,
-        noinline onCreate: ((MongoCollection<T>) -> Unit)? = null
-    ): MongoCollection<T> {
+        noinline onCreate: ((CoroutineCollection<T>) -> Unit)? = null
+    ): CoroutineCollection<T> {
 
         val ifNew = createCollection(name)
 
@@ -56,11 +57,12 @@ class SyncMongoDB(
      * @param name the name of the new collection
      * @return true, if a new collection was created
      */
-    override fun createCollection(name: String) =
+    override fun createCollection(name: String) = runBlocking {
         if (!database.listCollectionNames().contains(name)) {
             database.createCollection(name)
             true
         } else false
+    }
 
     override fun close() = mongoClient.close()
 

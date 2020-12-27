@@ -5,6 +5,7 @@ import org.mariadb.jdbc.MariaDbPoolDataSource
 import java.sql.ResultSet
 import java.sql.SQLException
 
+@Deprecated("Use https://github.com/jetbrains/exposed instead")
 class MariaDB(private val databaseLoginInformation: DatabaseLoginInformation) : AutoCloseable {
 
     private var pool: MariaDbPoolDataSource? = null

@@ -2,6 +2,9 @@ package net.axay.blueutils.time;
 
 import java.text.DecimalFormat;
 
+/**
+ * @deprecated Use kotlin measureTime functions instead.
+ */
 public class Timer {
 
     private long startTime;

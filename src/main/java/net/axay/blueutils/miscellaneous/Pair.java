@@ -2,6 +2,10 @@ package net.axay.blueutils.miscellaneous;
 
 import java.util.Objects;
 
+/**
+ * @deprecated Use kotlin Pair instead.
+ */
+@Deprecated
 public class Pair<T, E> {
 
     private T first;

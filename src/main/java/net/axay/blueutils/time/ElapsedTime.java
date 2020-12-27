@@ -1,5 +1,9 @@
 package net.axay.blueutils.time;
 
+/**
+ * @deprecated Use kotlin measureTime functions instead.
+ */
+@Deprecated
 public class ElapsedTime {
 
     private long elapsedTime;

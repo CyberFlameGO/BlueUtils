@@ -17,7 +17,7 @@ val JVM_VERSION_STRING = JVM_VERSION.versionString
  */
 
 group = "net.axay"
-version = "1.0.2"
+version = "1.0.3"
 
 description = "A collection of utils I need for myself."
 

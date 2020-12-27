@@ -11,7 +11,7 @@ import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollection
 import java.io.Closeable
 
-class MongoDB(
+class SyncMongoDB(
         private val loginInformation: DatabaseLoginInformation,
         kMongo: Boolean = true,
         spigot: Boolean = false

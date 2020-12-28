@@ -29,7 +29,7 @@ plugins {
 
     `java-library`
 
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.4.21"
 
     `maven-publish`
 
@@ -53,9 +53,6 @@ dependencies {
     // GSON
     implementation("com.google.code.gson", "gson", "2.8.6")
 
-    // JETBRAINS ANNOTATIONS
-    implementation("org.jetbrains", "annotations", "20.1.0")
-
     // KMONGO and MONGODB
     implementation("org.litote.kmongo", "kmongo-core", "4.2.3")
     implementation("org.litote.kmongo", "kmongo-coroutine-core", "4.2.3")
@@ -68,23 +65,16 @@ dependencies {
 
 // JAVA VERSION
 
-java.sourceCompatibility = JVM_VERSION
-java.targetCompatibility = JVM_VERSION
+java {
+    sourceCompatibility = JVM_VERSION
+    targetCompatibility = JVM_VERSION
+
+    withSourcesJar()
+}
 
 tasks {
     compileKotlin.configureJvmVersion()
     compileTestKotlin.configureJvmVersion()
-}
-
-// SOURCE CODE
-
-val sourcesJar by tasks.creating(Jar::class) {
-    archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource)
-}
-
-artifacts {
-    archives(sourcesJar)
 }
 
 /*
@@ -122,8 +112,6 @@ publishing {
 
 
             from(components["java"])
-
-            artifact(sourcesJar)
 
             this.groupId = project.group.toString()
             this.artifactId = project.name

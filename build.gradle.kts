@@ -70,6 +70,7 @@ java {
     targetCompatibility = JVM_VERSION
 
     withSourcesJar()
+    withJavadocJar()
 }
 
 tasks {

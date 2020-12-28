@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 /**
  * @deprecated Use kotlin measureTime functions instead.
  */
+@Deprecated
 public class Timer {
 
     private long startTime;

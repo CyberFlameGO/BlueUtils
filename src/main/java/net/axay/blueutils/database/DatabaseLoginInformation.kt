@@ -17,6 +17,9 @@ data class DatabaseLoginInformation(
     val mongoServerAddress
         get() = ServerAddress(host, port)
 
+    val isNotsetDefault
+        get() = this == NOTSET_DEFAULT
+
     companion object {
         val NOTSET_DEFAULT get() = DatabaseLoginInformation("notset", 12345, "notset", "notset", "notset")
     }

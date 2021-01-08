@@ -41,7 +41,11 @@ abstract class MongoDB<TClient, TDatabase>(
 
         mongoClient = clientCreator(clientSettings, kMongo)
 
-        database = databaseCreator(mongoClient, loginInformation.database)
+        database = databaseCreator(
+            mongoClient,
+            loginInformation.database
+                ?: throw IllegalStateException("The database name cannot be null, when creating a MongoDB instance")
+        )
 
     }
 

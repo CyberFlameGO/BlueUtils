@@ -47,7 +47,7 @@ public class ResourceUtils {
      * loads the content of the given file by lines
      * @param fileName the classpath fileName
      * @param charset the charset which should be used to decode the resource
-     * @return the content of the file as a {@link List<String>} representing the lines
+     * @return the content of the file as a List<String> representing the lines
      * @throws IOException if the file could not be loaded
      */
     public static List<String> loadResourceByLines(String fileName, Charset charset) throws IOException {

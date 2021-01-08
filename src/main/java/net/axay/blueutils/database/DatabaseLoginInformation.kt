@@ -11,9 +11,9 @@ data class DatabaseLoginInformation(
     val password: String?
 ) {
 
-    val mongoCredential: MongoCredential
-        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        get() = MongoCredential.createCredential(user, database, password?.toCharArray())
+    val mongoCredential: MongoCredential?
+        get() = if (database == null || user == null || password == null) null else
+            MongoCredential.createCredential(user, database, password.toCharArray())
 
     val mongoServerAddress
         get() = ServerAddress(host, port)

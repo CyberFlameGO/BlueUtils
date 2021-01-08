@@ -35,7 +35,9 @@ abstract class MongoDB<TClient, TDatabase>(
             .applyToClusterSettings { builder ->
                 builder.hosts(listOf(loginInformation.mongoServerAddress))
             }
-            .credential(loginInformation.mongoCredential)
+            .apply {
+                loginInformation.mongoCredential?.let { this.credential(it) }
+            }
             .uuidRepresentation(UuidRepresentation.STANDARD)
             .build()
 

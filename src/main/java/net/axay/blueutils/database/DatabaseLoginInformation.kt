@@ -6,13 +6,14 @@ import com.mongodb.ServerAddress
 data class DatabaseLoginInformation(
     val host: String,
     val port: Int,
-    val database: String,
-    val user: String,
-    val password: String
+    val database: String?,
+    val user: String?,
+    val password: String?
 ) {
 
     val mongoCredential: MongoCredential
-        get() = MongoCredential.createCredential(user, database, password.toCharArray())
+        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+        get() = MongoCredential.createCredential(user, database, password?.toCharArray())
 
     val mongoServerAddress
         get() = ServerAddress(host, port)

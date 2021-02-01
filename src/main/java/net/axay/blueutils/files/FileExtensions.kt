@@ -12,8 +12,9 @@ fun File.createIfNotExists(): Boolean {
         if (isDirectory)
             mkdirs()
         else {
-            if (!parentFile.exists())
-                parentFile.mkdirs()
+            val absolute = absoluteFile
+            if (!absolute.parentFile.exists())
+                absolute.parentFile.mkdirs()
             createNewFile()
         }
     } else true

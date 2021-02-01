@@ -53,6 +53,9 @@ dependencies {
     // GSON
     implementation("com.google.code.gson", "gson", "2.8.6")
 
+    // CONFIG4K
+    implementation("io.github.config4k", "config4k", "0.4.2")
+
     // KMONGO and MONGODB
     implementation("org.litote.kmongo", "kmongo-core", "4.2.3")
     implementation("org.litote.kmongo", "kmongo-coroutine-core", "4.2.3")

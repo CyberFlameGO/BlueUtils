@@ -17,5 +17,5 @@ fun File.createIfNotExists(): Boolean {
                 absolute.parentFile.mkdirs()
             createNewFile()
         }
-    } else true
+    } else false
 }
